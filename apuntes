@@ -1,1 +1,3 @@
 mateapp: Te crea el main con el materialApp
+
+slivers: Son widgets que tienen cierto comportamiento pre programado cuando se hace scroll en el contenido del padre
