@@ -1,3 +1,5 @@
 mateapp: Te crea el main con el materialApp
 
 slivers: Son widgets que tienen cierto comportamiento pre programado cuando se hace scroll en el contenido del padre
+
+provider: Es necesario poner el MultiProvider en el main para que funciones (también se puede poner un widget para un solo provider pero es recomendable poner siempre el MultiProvider)
