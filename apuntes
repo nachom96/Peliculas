@@ -3,3 +3,13 @@ mateapp: Te crea el main con el materialApp
 slivers: Son widgets que tienen cierto comportamiento pre programado cuando se hace scroll en el contenido del padre
 
 provider: Es necesario poner el MultiProvider en el main para que funciones (también se puede poner un widget para un solo provider pero es recomendable poner siempre el MultiProvider)
+
+- Usar API (ejemplo con themoviedb):
+    0º Explicado en el vídeo 115 - Backend
+    1º Añadir dependencias http (y provider si es necesario)
+    2º En la documentación oficial, ir al Get de la información que necesitamos, en este caso now playing (https://developers.themoviedb.org/3/movies/get-now-playing)
+    3º Darle a Try it out, pegamos nuestra Api key y le damos a Send Request
+    4º Aunque de fallo, copiar el https que se genera a la derecha de Send Request y pegarlo en la aplicación PostMan (dándole al +)
+    5º Darle a Send y ya debería salir.
+    6º Ir a quicktype.io y pegar lo que ha generado el postman, marcar: Dart, put encoder & decoder in class, use method names fromap y tomap
+    7º En una nueva clase modelo, pegar todo lo generado por quicktype.io
