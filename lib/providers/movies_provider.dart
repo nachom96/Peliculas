@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:peliculas/models/now_playing_response.dart';
 
 // En apuntes, está explicado cómo usar la Api.
 
@@ -23,7 +24,7 @@ class MoviesProvider extends ChangeNotifier {
 
     // Await the http get response, then decode the json-formatted response.
     final response = await http.get(url);
-    final decodedData = json.decode(response.body) as Map<String, dynamic>;
-    print(decodedData['results']);
+    final nowPlayingResponse = NowPlayingResponse.fromJson(response.body);
+    print(nowPlayingResponse.results[1].title);
   }
 }
