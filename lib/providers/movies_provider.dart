@@ -1,8 +1,8 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:peliculas/models/now_playing_response.dart';
+import '../models/movie.dart';
 
 // En apuntes, está explicado cómo usar la Api.
 
@@ -11,6 +11,8 @@ class MoviesProvider extends ChangeNotifier {
   String _apiKey = '47b9d7290b6f057ee873786df73048b2';
   String _baseUrl = 'api.themoviedb.org';
   String _language = 'es-ES';
+
+  List<Movie> onDisplayMovies = [];
 
   MoviesProvider() {
     print('MoviesProvider inicializado');
@@ -26,5 +28,8 @@ class MoviesProvider extends ChangeNotifier {
     final response = await http.get(url);
     final nowPlayingResponse = NowPlayingResponse.fromJson(response.body);
     print(nowPlayingResponse.results[1].title);
+
+    onDisplayMovies = nowPlayingResponse.results;
+    notifyListeners();
   }
 }
