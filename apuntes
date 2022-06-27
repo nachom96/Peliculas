@@ -13,3 +13,11 @@ provider: Es necesario poner el MultiProvider en el main para que funciones (tam
     5º Darle a Send y ya debería salir.
     6º Ir a quicktype.io y pegar lo que ha generado el postman, marcar: Dart, put encoder & decoder in class, use method names fromap y tomap
     7º En una nueva clase modelo, pegar todo lo generado por quicktype.io
+
+
+- Los archivos que se llaman archivo_response, es para asociar que es una clase que está hecha para mapear información que viene de algún servicio
+
+- Guardar sin tabular: Ctrl + K, Ctrl + Shift + S
+
+- Desactivar el formateo al guardar: 
+    - Ir al settings.json y poner en false el "editor.formatOnSave": false,
