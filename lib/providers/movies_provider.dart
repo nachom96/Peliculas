@@ -16,38 +16,44 @@ class MoviesProvider extends ChangeNotifier {
   List<Movie> onDisplayMovies = [];
   List<Movie> popularMovies = [];
 
+  int _popularPage = 0;
+
   MoviesProvider() {
-    this.getOnDisplayMovies();
-    this.getPopularMovies();
+    getOnDisplayMovies();
+    getPopularMovies();
     // ignore: avoid_print
     print('MoviesProvider inicializado');
 
     getOnDisplayMovies();
   }
 
-  getOnDisplayMovies() async {
-    var url = Uri.https(_baseUrl, '3/movie/now_playing',
-        {'api_key': _apiKey, 'language': _language, 'page': '1'});
+  // [int page = 1 ] significa que es opcional, pero si no da el dato vale 1
+  Future<String> _getJsonData(String endpoint, [int page = 1]) async {
+    var url = Uri.https(_baseUrl, endpoint,
+        {'api_key': _apiKey, 'language': _language, 'page': '$page'});
 
     // Await the http get response, then decode the json-formatted response.
     final response = await http.get(url);
-    final nowPlayingResponse = NowPlayingResponse.fromJson(response.body);
+    return response.body;
+  }
+
+  getOnDisplayMovies() async {
+    final jsonData = await _getJsonData('3/movie/now_playing');
+    final nowPlayingResponse = NowPlayingResponse.fromJson(jsonData);
     onDisplayMovies = nowPlayingResponse.results;
     notifyListeners();
   }
 
   getPopularMovies() async {
-    var url = Uri.https(_baseUrl, '3/movie/popular',
-        {'api_key': _apiKey, 'language': _language, 'page': '1'});
 
-    // Await the http get response, then decode the json-formatted response.
-    final response = await http.get(url);
-    final popularResponse = PopularResponse.fromJson(response.body);
+    _popularPage++;
+
+    final jsonData = await _getJsonData('3/movie/popular', 1);
+    final popularResponse = PopularResponse.fromJson(jsonData);
 
     // Toma las películas actuales y siempre va a ser parte de las popular movies y se concatenan los resultados
     // ... es el spread operator, para separar cada una de las películas
     popularMovies = [...popularMovies, ...popularResponse.results];
-    print(popularMovies[0]);
     notifyListeners();
   }
 }

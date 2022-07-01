@@ -33,7 +33,7 @@ class CardSwiper extends StatelessWidget {
           // Con el ClipRRect se puede añadir el borde circular
           return GestureDetector(
             onTap: () => Navigator.pushNamed(context, 'details',
-                arguments: 'movie-instance'),
+                arguments: movie),
             child: ClipRRect(
               borderRadius: BorderRadius.circular(20),
               child: FadeInImage(
