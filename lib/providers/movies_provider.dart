@@ -1,9 +1,6 @@
-import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:peliculas/models/now_playing_response.dart';
-import 'package:peliculas/models/popular_response.dart';
-import '../models/movie.dart';
+import '../models/models.dart';
 
 // En apuntes, está explicado cómo usar la Api.
 
@@ -15,6 +12,8 @@ class MoviesProvider extends ChangeNotifier {
 
   List<Movie> onDisplayMovies = [];
   List<Movie> popularMovies = [];
+
+  Map<int, List<Cast>> moviesCast = {};
 
   int _popularPage = 0;
 
@@ -45,7 +44,6 @@ class MoviesProvider extends ChangeNotifier {
   }
 
   getPopularMovies() async {
-
     _popularPage++;
 
     final jsonData = await _getJsonData('3/movie/popular', 1);
@@ -55,5 +53,18 @@ class MoviesProvider extends ChangeNotifier {
     // ... es el spread operator, para separar cada una de las películas
     popularMovies = [...popularMovies, ...popularResponse.results];
     notifyListeners();
+  }
+
+  Future<List<Cast>> getMovieCast(int movieId) async {
+    if (moviesCast.containsKey(movieId)) return moviesCast[movieId]!;
+
+    print('pidiendo info al servidor');
+
+    final jsonData = await _getJsonData('3/movie/$movieId/credits');
+    final creditsResponse = CreditsResponse.fromJson(jsonData);
+
+    moviesCast[movieId] = creditsResponse.cast;
+
+    return creditsResponse.cast;
   }
 }
